@@ -1,7 +1,9 @@
-function App() {
+import Display from "./components/Display";
+
+const App = () => {
   return (
     <div>
-      neon_snake
+      <Display/>
     </div>
   );
 }
