@@ -3,3 +3,9 @@ body {
   display: flex;
   justify-content: center;
 }
+.display {
+  position: relative;
+}
+.field {
+  position: absolute;
+}
