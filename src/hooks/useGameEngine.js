@@ -1,26 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-const useGameEngine = (gameSpeed) => {
+const useGameEngine = (gameSpeed, gameUpdate) => {
   const [running, setRunning] = useState(false);
-  const [snake, setSnake] = useState([
-    {x: 3, y: 4},
-  ])
+  const [loopNum, setLoopNum] = useState(0);
 
-  
-  const moveSnake = () => {
-    const newSnake = [...snake];
-    newSnake[0]['x']++
-    setSnake(newSnake)
+  const switchPlayStop = () => {
+    setRunning(!running)
   }
-  
 
   useEffect(() => {
     if(running){
-      setTimeout(moveSnake, gameSpeed)
+      gameUpdate()
+      setTimeout(() => {setLoopNum(loopNum + 1)}, gameSpeed)
     }
-  },[running, snake])
+  },[running, loopNum])
 
-  return {setRunning, snake}
+  return {switchPlayStop}
 }
 
 export default useGameEngine;

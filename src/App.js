@@ -1,23 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Display from "./components/Display";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
+import useGame from "./hooks/useGame";
 
 const App = () => {
 
-  const {setRunning, snake} = useGameEngine(1000)
   const {pressedKey, pressEvent} = useKeyPress()
 
+  const {updateSnakeDirection, snake, moveSnake} = useGame()
+
+  const {switchPlayStop} = useGameEngine(500, moveSnake)
+
   useEffect(() => {
-    console.log(pressedKey)
+    switch (pressedKey) {
+      case 'ArrowRight':
+        updateSnakeDirection('RIGHT')
+        break;
+      case 'ArrowLeft':
+        updateSnakeDirection('LEFT')
+        break;
+      case 'ArrowUp':
+        updateSnakeDirection('UP')
+        break;
+      case 'ArrowDown':
+        updateSnakeDirection('DOWN')
+        break;
+      case 'Space':
+        switchPlayStop()
+      default:
+        break;
+    }
   },[pressEvent])
 
   return (
     <div>
       <Display gameSize={25} entities={snake} />
-      <button onClick={() => {setRunning(false)}}>pause</button>
-      <button onClick={() => {setRunning(true)}}>play</button>
-      <input type="text" onKeyPress={(e) => {console.log(e)}} ></input>
     </div>
   )
 }

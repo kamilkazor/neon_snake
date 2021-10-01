@@ -6,6 +6,7 @@ const useKeyPress = () => {
   const keyUp = useRef(true);
 
   const handleKeyDown = (event) => {
+    event.preventDefault();
     if(keyUp.current){
       keyUp.current = false
       setPressedKey(event.code);
@@ -14,6 +15,7 @@ const useKeyPress = () => {
   };
 
   const handleKeyUp = (event) => {
+    event.preventDefault();
     keyUp.current = true
   };
 
