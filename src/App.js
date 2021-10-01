@@ -1,20 +1,15 @@
 import Display from "./components/Display";
+import useGameEngine from "./hooks/useGameEngine";
 
 const App = () => {
 
-  const snake = [
-    {x: 3, y: 4},
-    {x: 3, y: 5},
-    {x: 3, y: 6},
-    {x: 4, y: 6},
-    {x: 4, y: 7},
-    {x: 4, y: 8}
-  ]
-
+  const {setRunning, snake} = useGameEngine(1000)
 
   return (
     <div>
       <Display gameSize={25} entities={snake} />
+      <button onClick={() => {setRunning(false)}}>pause</button>
+      <button onClick={() => {setRunning(true)}}>play</button>
     </div>
   )
 }
