@@ -3,6 +3,10 @@ import { useEffect, useState } from "react"
 const useGame = (gameSize) => {
   const [snakeDirection, setSnakeDirection] = useState('RIGHT');
   const [snake, setSnake] = useState([
+    {x: 10, y: 0},
+    {x: 9, y: 0},
+    {x: 8, y: 0},
+    {x: 7, y: 0},
     {x: 6, y: 0},
     {x: 5, y: 0},
     {x: 4, y: 0},
@@ -56,9 +60,8 @@ const useGame = (gameSize) => {
     }
   }
 
-  
+
   const checkBorders = () => {
-    console.log(snake[0])
     if(
       snake[0]['x'] < 0 
       || snake[0]['x'] > gameSize - 1
@@ -69,9 +72,21 @@ const useGame = (gameSize) => {
     }
   }
 
+  const checkSnakeBody = () => {
+    const snakeCopy = [...snake];
+    const head = snakeCopy.shift();
+    snakeCopy.forEach((segment) => {
+      if(segment.x === head.x && segment.y === head.y){
+        console.log('You ate yourself')
+      }
+    })
+
+  }
+
 
   useEffect(() => {
     checkBorders()
+    checkSnakeBody()
   },[snake])
 
   const updateGame = () => {
