@@ -11,7 +11,6 @@ const Display = ({gameSize, entities}) => {
   const displayStyle = {
     width: displaySize,
     height: displaySize,
-    border: "1px solid black"
   }
   
   return (

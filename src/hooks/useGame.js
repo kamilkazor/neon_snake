@@ -2,24 +2,17 @@ import { useEffect, useState } from "react"
 
 const useGame = (gameSize) => {
   const [pending, setPending] = useState(true);
+  const [gameCount, setGameCount] = useState(0);
+  const [food, setFood] = useState(null)
   const [snake, setSnake] = useState([
-    {x: 10, y: 0},
-    {x: 9, y: 0},
-    {x: 8, y: 0},
-    {x: 7, y: 0},
-    {x: 6, y: 0},
-    {x: 5, y: 0},
-    {x: 4, y: 0},
-    {x: 3, y: 0},
-    {x: 2, y: 0},
-    {x: 1, y: 0},
-    {x: 0, y: 0},
+    {x: 2, y: 0, type: 'snakeEmpty'},
+    {x: 1, y: 0, type: 'snakeEmpty'},
+    {x: 0, y: 0, type: 'snakeEmpty'},
   ])
   const [entities, setEntities] = useState([...snake])
   
 
   const [snakeDirection, setSnakeDirection] = useState('RIGHT');
-
   //Checking if new direction is allowed and assigning new value
   const updateSnakeDirection = (newDirection) => {
     if(newDirection === 'RIGHT' && snake[0]['x'] >= snake[1]['x']) setSnakeDirection(newDirection);
@@ -27,35 +20,38 @@ const useGame = (gameSize) => {
     if(newDirection === 'DOWN' && snake[0]['y'] >= snake[1]['y']) setSnakeDirection(newDirection);
     if(newDirection === 'UP' && snake[0]['y'] <= snake[1]['y']) setSnakeDirection(newDirection);
   }
-
-  //Moving snake in current direction
+  //Moving snake in current direction, growing snake
   const moveSnake = () => {
     const head = snake[0]
     let newHead
     const updateSnake = (newHead) => {
       const updatedSnake = [...snake];
       updatedSnake.unshift(newHead);
-      updatedSnake.pop();
+      let tail = updatedSnake.pop();
+      if(tail.type === 'snakeFull'){
+        tail.type = 'snakeEmpty';
+        updatedSnake.push(tail);
+      }
       setSnake(updatedSnake)
     }
     switch (snakeDirection) {
       case 'RIGHT':
-        newHead = {...head}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.x++
         updateSnake(newHead)
         break;
       case 'LEFT':
-        newHead = {...head}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.x--
         updateSnake(newHead)
         break;
       case 'UP':
-        newHead = {...head}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.y--
         updateSnake(newHead)
         break;
       case 'DOWN':
-        newHead = {...head}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.y++
         updateSnake(newHead)
         break;     
@@ -69,7 +65,6 @@ const useGame = (gameSize) => {
   const gameOver = () => {
     setPending(false)
   }
-
   //Returns true if border was crossed
   const checkBorders = () => {
     let borderCrossed = false;
@@ -96,20 +91,63 @@ const useGame = (gameSize) => {
     return biteItself;
   }
 
+  //Creates food in random empty field
+  const addFood = () => {
+    let emptyFields = [];
+    let snakeFields = [];
+    snake.forEach((segment) => {
+      snakeFields.push(`${segment.x}:${segment.y}`);
+    })
+    for(let x = 0; x < gameSize; x++){
+      for (let y = 0; y < gameSize; y++){
+        let field = `${x}:${y}`
+        if(!snakeFields.includes(field)){
+          emptyFields.push(field)
+        } 
+      }
+    }
+    let randomField = emptyFields[Math.floor(Math.random()*emptyFields.length)];
+    randomField = randomField.split(':');
+    let newFood = {x: parseInt(randomField[0]), y: parseInt(randomField[1]), type: 'food'};
+    setFood(newFood);
+    return newFood;
+  }
+  //Creates new food if there is no or has been eaten
+  const checkFood = () => {
+    let currentFood;
+    let currentSnake;
+    if(!food){
+      currentFood = addFood();
+    }
+    else{
+      currentFood = food;
+    }
+    if(snake[0]['x'] === currentFood['x'] && snake[0]['y'] === currentFood['y']){
+      currentFood = addFood();
+      currentSnake = [...snake];
+      currentSnake[0]['type'] = 'snakeFull';
+    }
+    else{
+      currentSnake = snake;
+    }
+    return {currentFood, currentSnake};
+  }
 
   useEffect(() => {
     //Checking lose conditions
     if(checkBorders() || checkSnakeBody()){
       gameOver()
+    } 
+    else{
+      let {currentFood, currentSnake} = checkFood();
+      setEntities([...currentSnake, currentFood]);
     }
-    else(
-      setEntities([...snake])
-    )
-  },[snake])
+  },[gameCount])
 
   const updateGame = () => {
     if(pending){
       moveSnake()
+      setGameCount(gameCount + 1)
     }
   }
 

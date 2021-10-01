@@ -2,10 +2,25 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
+  background-color: black;
 }
 .display {
   position: relative;
+  margin-top: 30px;
+  border: 4px solid yellow;
+  background-color: black;
 }
 .field {
   position: absolute;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+.food {
+  background-color: red;
+}
+.snakeEmpty {
+  background-color: blue;
+}
+.snakeFull {
+  background-color: blueviolet;
 }
