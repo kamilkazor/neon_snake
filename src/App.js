@@ -2,21 +2,14 @@ import { useEffect, useState } from "react";
 import Display from "./components/Display";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
+import useGame from "./hooks/useGame";
 
 const App = () => {
 
   const {pressedKey, pressEvent} = useKeyPress()
-  
-  const [snake, setSnake] = useState([
-    {x: 3, y: 4},
-  ])
-  
-  
-  const moveSnake = () => {
-    const newSnake = [...snake];
-    newSnake[0]['x']++
-    setSnake(newSnake)
-  }
+
+  const {updateSnakeDirection, snake, moveSnake} = useGame()
+
   const {setRunning} = useGameEngine(500, moveSnake)
 
   useEffect(() => {
@@ -28,6 +21,10 @@ const App = () => {
       <Display gameSize={25} entities={snake} />
       <button onClick={() => {setRunning(false)}}>pause</button>
       <button onClick={() => {setRunning(true)}}>play</button>
+      <button onClick={() => {updateSnakeDirection('LEFT')}}>LEFT</button>
+      <button onClick={() => {updateSnakeDirection('RIGHT')}}>RIGHT</button>
+      <button onClick={() => {updateSnakeDirection('TOP')}}>TOP</button>
+      <button onClick={() => {updateSnakeDirection('BOTTOM')}}>BOTTOM</button>
     </div>
   )
 }
