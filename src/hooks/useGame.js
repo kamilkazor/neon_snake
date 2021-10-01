@@ -1,12 +1,24 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-const useGame = () => {
-  const [snakeDirection, setSnakeDirection] = useState('RIGHT');
+const useGame = (gameSize) => {
+  const [pending, setPending] = useState(true);
   const [snake, setSnake] = useState([
+    {x: 10, y: 0},
+    {x: 9, y: 0},
+    {x: 8, y: 0},
+    {x: 7, y: 0},
+    {x: 6, y: 0},
+    {x: 5, y: 0},
+    {x: 4, y: 0},
+    {x: 3, y: 0},
     {x: 2, y: 0},
     {x: 1, y: 0},
     {x: 0, y: 0},
   ])
+  const [entities, setEntities] = useState([...snake])
+  
+
+  const [snakeDirection, setSnakeDirection] = useState('RIGHT');
 
   //Checking if new direction is allowed and assigning new value
   const updateSnakeDirection = (newDirection) => {
@@ -26,7 +38,6 @@ const useGame = () => {
       updatedSnake.pop();
       setSnake(updatedSnake)
     }
-    console.log(head)
     switch (snakeDirection) {
       case 'RIGHT':
         newHead = {...head}
@@ -54,7 +65,56 @@ const useGame = () => {
   }
 
 
-  return {updateSnakeDirection, snake, moveSnake}
+  //Stops the game
+  const gameOver = () => {
+    setPending(false)
+  }
+
+  //Returns true if border was crossed
+  const checkBorders = () => {
+    let borderCrossed = false;
+    if(
+      snake[0]['x'] < 0 
+      || snake[0]['x'] > gameSize - 1
+      || snake[0]['y'] < 0 
+      ||snake[0]['y'] > gameSize - 1
+    ){
+      borderCrossed = true;
+    }
+    return borderCrossed;
+  }
+  //Returns true if snake bite itself
+  const checkSnakeBody = () => {
+    let biteItself = false;
+    const snakeCopy = [...snake];
+    const head = snakeCopy.shift();
+    snakeCopy.forEach((segment) => {
+      if(segment.x === head.x && segment.y === head.y){
+        biteItself = true;
+      }
+    })
+    return biteItself;
+  }
+
+
+  useEffect(() => {
+    //Checking lose conditions
+    if(checkBorders() || checkSnakeBody()){
+      gameOver()
+    }
+    else(
+      setEntities([...snake])
+    )
+  },[snake])
+
+  const updateGame = () => {
+    if(pending){
+      moveSnake()
+    }
+  }
+
+  
+  return {updateSnakeDirection, entities, updateGame}
 }
 
 export default useGame;
