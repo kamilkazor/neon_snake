@@ -2,19 +2,20 @@ import { useEffect, useState } from "react"
 
 const useGame = (gameSize) => {
   const [pending, setPending] = useState(true);
-  const [food, setFood] = useState({})
+  const [gameCount, setGameCount] = useState(0);
+  const [food, setFood] = useState(null)
   const [snake, setSnake] = useState([
-    {x: 10, y: 0},
-    {x: 9, y: 0},
-    {x: 8, y: 0},
-    {x: 7, y: 0},
-    {x: 6, y: 0},
-    {x: 5, y: 0},
-    {x: 4, y: 0},
-    {x: 3, y: 0},
-    {x: 2, y: 0},
-    {x: 1, y: 0},
-    {x: 0, y: 0},
+    {x: 10, y: 0, type: 'snake-empty'},
+    {x: 9, y: 0, type: 'snake-empty'},
+    {x: 8, y: 0, type: 'snake-empty'},
+    {x: 7, y: 0, type: 'snake-empty'},
+    {x: 6, y: 0, type: 'snake-empty'},
+    {x: 5, y: 0, type: 'snake-empty'},
+    {x: 4, y: 0, type: 'snake-empty'},
+    {x: 3, y: 0, type: 'snake-empty'},
+    {x: 2, y: 0, type: 'snake-empty'},
+    {x: 1, y: 0, type: 'snake-empty'},
+    {x: 0, y: 0, type: 'snake-empty'},
   ])
   const [entities, setEntities] = useState([...snake])
   
@@ -111,11 +112,30 @@ const useGame = (gameSize) => {
     }
     let randomField = emptyFields[Math.floor(Math.random()*emptyFields.length)];
     randomField = randomField.split(':');
-    let newFood = {x: randomField[0], y: randomField[1]};
+    let newFood = {x: parseInt(randomField[0]), y: parseInt(randomField[1]), type: 'food'};
     setFood(newFood);
     return newFood;
   }
-
+  //Creates new food if there is no or has been eaten
+  const checkFood = () => {
+    let currentFood;
+    let currentSnake;
+    if(!food){
+      currentFood = addFood();
+    }
+    else{
+      currentFood = food;
+    }
+    if(snake[0]['x'] === currentFood['x'] && snake[0]['y'] === currentFood['y']){
+      currentFood = addFood();
+      currentSnake = [...snake];
+      currentSnake[0]['type'] = 'snake-full';
+    }
+    else{
+      currentSnake = snake;
+    }
+    return {currentFood, currentSnake};
+  }
 
   useEffect(() => {
     //Checking lose conditions
@@ -123,14 +143,15 @@ const useGame = (gameSize) => {
       gameOver()
     } 
     else{
-      let newFood = addFood()
-      setEntities([...snake, newFood]);
+      let {currentFood} = checkFood();
+      setEntities([...snake, currentFood]);
     }
-  },[snake])
+  },[gameCount])
 
   const updateGame = () => {
     if(pending){
       moveSnake()
+      setGameCount(gameCount + 1)
     }
   }
 
