@@ -5,9 +5,9 @@ const useGame = (gameSize) => {
   const [gameCount, setGameCount] = useState(0);
   const [food, setFood] = useState(null)
   const [snake, setSnake] = useState([
-    {x: 2, y: 0, type: 'snake-empty'},
-    {x: 1, y: 0, type: 'snake-empty'},
-    {x: 0, y: 0, type: 'snake-empty'},
+    {x: 2, y: 0, type: 'snakeEmpty'},
+    {x: 1, y: 0, type: 'snakeEmpty'},
+    {x: 0, y: 0, type: 'snakeEmpty'},
   ])
   const [entities, setEntities] = useState([...snake])
   
@@ -28,30 +28,30 @@ const useGame = (gameSize) => {
       const updatedSnake = [...snake];
       updatedSnake.unshift(newHead);
       let tail = updatedSnake.pop();
-      if(tail.type === 'snake-full'){
-        tail.type = 'snake-empty';
+      if(tail.type === 'snakeFull'){
+        tail.type = 'snakeEmpty';
         updatedSnake.push(tail);
       }
       setSnake(updatedSnake)
     }
     switch (snakeDirection) {
       case 'RIGHT':
-        newHead = {...head, type: 'snake-empty'}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.x++
         updateSnake(newHead)
         break;
       case 'LEFT':
-        newHead = {...head, type: 'snake-empty'}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.x--
         updateSnake(newHead)
         break;
       case 'UP':
-        newHead = {...head, type: 'snake-empty'}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.y--
         updateSnake(newHead)
         break;
       case 'DOWN':
-        newHead = {...head, type: 'snake-empty'}
+        newHead = {...head, type: 'snakeEmpty'}
         newHead.y++
         updateSnake(newHead)
         break;     
@@ -125,7 +125,7 @@ const useGame = (gameSize) => {
     if(snake[0]['x'] === currentFood['x'] && snake[0]['y'] === currentFood['y']){
       currentFood = addFood();
       currentSnake = [...snake];
-      currentSnake[0]['type'] = 'snake-full';
+      currentSnake[0]['type'] = 'snakeFull';
     }
     else{
       currentSnake = snake;

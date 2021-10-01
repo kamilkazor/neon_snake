@@ -6,14 +6,15 @@ const Field = ({entity, size}) => {
     width: size,
     height: size,
     left: fieldLeft,
-    top: fieldTop,
-    backgroundColor: "black",
-    boxSizing: "border-box",
-    border: "1px solid white"
+    top: fieldTop
   }
+
+
+
+  let classes = `field ${entity.type}`
   
   return(
-    <div className="field" style={fieldStyle}></div>
+    <div className={classes} style={fieldStyle}></div>
   )
 }
 

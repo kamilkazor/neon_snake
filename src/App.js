@@ -5,12 +5,14 @@ import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
 
 const App = () => {
+  const gameSize = 25;
+  const gameSpeed = 125;
 
   const {pressedKey, pressEvent} = useKeyPress()
 
-  const {updateSnakeDirection, entities, updateGame} = useGame(25)
+  const {updateSnakeDirection, entities, updateGame} = useGame(gameSize)
 
-  const {switchPlayStop} = useGameEngine(125, updateGame)
+  const {switchPlayStop} = useGameEngine(gameSpeed, updateGame)
 
   useEffect(() => {
     switch (pressedKey) {
@@ -36,7 +38,7 @@ const App = () => {
 
   return (
     <div>
-      <Display gameSize={25} entities={entities} />
+      <Display gameSize={gameSize} entities={entities} />
     </div>
   )
 }
