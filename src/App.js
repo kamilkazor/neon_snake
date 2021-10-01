@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Display from "./components/Display";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
@@ -8,9 +8,9 @@ const App = () => {
 
   const {pressedKey, pressEvent} = useKeyPress()
 
-  const {updateSnakeDirection, snake, moveSnake} = useGame()
+  const {updateSnakeDirection, snake, updateGame} = useGame(25)
 
-  const {switchPlayStop} = useGameEngine(500, moveSnake)
+  const {switchPlayStop} = useGameEngine(250, updateGame)
 
   useEffect(() => {
     switch (pressedKey) {
@@ -28,6 +28,7 @@ const App = () => {
         break;
       case 'Space':
         switchPlayStop()
+        break;
       default:
         break;
     }

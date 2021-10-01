@@ -1,8 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-const useGame = () => {
+const useGame = (gameSize) => {
   const [snakeDirection, setSnakeDirection] = useState('RIGHT');
   const [snake, setSnake] = useState([
+    {x: 6, y: 0},
+    {x: 5, y: 0},
+    {x: 4, y: 0},
+    {x: 3, y: 0},
     {x: 2, y: 0},
     {x: 1, y: 0},
     {x: 0, y: 0},
@@ -26,7 +30,6 @@ const useGame = () => {
       updatedSnake.pop();
       setSnake(updatedSnake)
     }
-    console.log(head)
     switch (snakeDirection) {
       case 'RIGHT':
         newHead = {...head}
@@ -53,8 +56,29 @@ const useGame = () => {
     }
   }
 
+  
+  const checkBorders = () => {
+    console.log(snake[0])
+    if(
+      snake[0]['x'] < 0 
+      || snake[0]['x'] > gameSize - 1
+      || snake[0]['y'] < 0 
+      ||snake[0]['y'] > gameSize - 1
+    ){
+      console.log('out of border')
+    }
+  }
 
-  return {updateSnakeDirection, snake, moveSnake}
+
+  useEffect(() => {
+    checkBorders()
+  },[snake])
+
+  const updateGame = () => {
+    moveSnake()
+  }
+
+  return {updateSnakeDirection, snake, updateGame}
 }
 
 export default useGame;
