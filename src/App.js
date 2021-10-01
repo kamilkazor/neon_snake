@@ -10,10 +10,26 @@ const App = () => {
 
   const {updateSnakeDirection, snake, moveSnake} = useGame()
 
-  const {setRunning} = useGameEngine(500, moveSnake)
+  const {setRunning} = useGameEngine(1000, moveSnake)
 
   useEffect(() => {
     console.log(pressedKey)
+    switch (pressedKey) {
+      case 'ArrowRight':
+        updateSnakeDirection('RIGHT')
+        break;
+      case 'ArrowLeft':
+        updateSnakeDirection('LEFT')
+        break;
+      case 'ArrowUp':
+        updateSnakeDirection('UP')
+        break;
+      case 'ArrowDown':
+        updateSnakeDirection('DOWN')
+        break;
+      default:
+        break;
+    }
   },[pressEvent])
 
   return (

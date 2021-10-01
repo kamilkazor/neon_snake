@@ -12,8 +12,8 @@ const useGame = () => {
   const updateSnakeDirection = (newDirection) => {
     if(newDirection === 'RIGHT' && snakeDirection !== 'LEFT') setSnakeDirection(newDirection);
     if(newDirection === 'LEFT' && snakeDirection !== 'RIGHT') setSnakeDirection(newDirection);
-    if(newDirection === 'TOP' && snakeDirection !== 'BOTTOM') setSnakeDirection(newDirection);
-    if(newDirection === 'BOTTOM' && snakeDirection !== 'TOP') setSnakeDirection(newDirection);
+    if(newDirection === 'UP' && snakeDirection !== 'DOWN') setSnakeDirection(newDirection);
+    if(newDirection === 'DOWN' && snakeDirection !== 'UP') setSnakeDirection(newDirection);
   }
 
   //Moving snake in current direction
@@ -39,12 +39,12 @@ const useGame = () => {
         newHead.x--
         updateSnake(newHead)
         break;
-      case 'TOP':
+      case 'UP':
         newHead = {...head}
         newHead.y--
         updateSnake(newHead)
         break;
-      case 'BOTTOM':
+      case 'DOWN':
         newHead = {...head}
         newHead.y++
         updateSnake(newHead)
