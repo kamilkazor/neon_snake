@@ -10,7 +10,7 @@ const App = () => {
 
   const {updateSnakeDirection, snake, moveSnake} = useGame()
 
-  const {setRunning} = useGameEngine(1000, moveSnake)
+  const {setRunning} = useGameEngine(500, moveSnake)
 
   useEffect(() => {
     console.log(pressedKey)

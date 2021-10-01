@@ -10,10 +10,10 @@ const useGame = () => {
 
   //Checking if new direction is allowed and assigning new value
   const updateSnakeDirection = (newDirection) => {
-    if(newDirection === 'RIGHT' && snakeDirection !== 'LEFT') setSnakeDirection(newDirection);
-    if(newDirection === 'LEFT' && snakeDirection !== 'RIGHT') setSnakeDirection(newDirection);
-    if(newDirection === 'UP' && snakeDirection !== 'DOWN') setSnakeDirection(newDirection);
-    if(newDirection === 'DOWN' && snakeDirection !== 'UP') setSnakeDirection(newDirection);
+    if(newDirection === 'RIGHT' && snake[0]['x'] >= snake[1]['x']) setSnakeDirection(newDirection);
+    if(newDirection === 'LEFT' && snake[0]['x'] <= snake[1]['x']) setSnakeDirection(newDirection);
+    if(newDirection === 'DOWN' && snake[0]['y'] >= snake[1]['y']) setSnakeDirection(newDirection);
+    if(newDirection === 'UP' && snake[0]['y'] <= snake[1]['y']) setSnakeDirection(newDirection);
   }
 
   //Moving snake in current direction
