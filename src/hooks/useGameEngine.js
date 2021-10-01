@@ -6,11 +6,13 @@ const useGameEngine = (gameSpeed) => {
     {x: 3, y: 4},
   ])
 
+  
   const moveSnake = () => {
     const newSnake = [...snake];
     newSnake[0]['x']++
     setSnake(newSnake)
   }
+  
 
   useEffect(() => {
     if(running){
