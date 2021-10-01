@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const useGame = (gameSize) => {
-  const [snakeDirection, setSnakeDirection] = useState('RIGHT');
+  const [pending, setPending] = useState(true);
   const [snake, setSnake] = useState([
     {x: 10, y: 0},
     {x: 9, y: 0},
@@ -15,6 +15,10 @@ const useGame = (gameSize) => {
     {x: 1, y: 0},
     {x: 0, y: 0},
   ])
+  const [entities, setEntities] = useState([...snake])
+  
+
+  const [snakeDirection, setSnakeDirection] = useState('RIGHT');
 
   //Checking if new direction is allowed and assigning new value
   const updateSnakeDirection = (newDirection) => {
@@ -61,39 +65,56 @@ const useGame = (gameSize) => {
   }
 
 
+  //Stops the game
+  const gameOver = () => {
+    setPending(false)
+  }
+
+  //Returns true if border was crossed
   const checkBorders = () => {
+    let borderCrossed = false;
     if(
       snake[0]['x'] < 0 
       || snake[0]['x'] > gameSize - 1
       || snake[0]['y'] < 0 
       ||snake[0]['y'] > gameSize - 1
     ){
-      console.log('out of border')
+      borderCrossed = true;
     }
+    return borderCrossed;
   }
-
+  //Returns true if snake bite itself
   const checkSnakeBody = () => {
+    let biteItself = false;
     const snakeCopy = [...snake];
     const head = snakeCopy.shift();
     snakeCopy.forEach((segment) => {
       if(segment.x === head.x && segment.y === head.y){
-        console.log('You ate yourself')
+        biteItself = true;
       }
     })
-
+    return biteItself;
   }
 
 
   useEffect(() => {
-    checkBorders()
-    checkSnakeBody()
+    //Checking lose conditions
+    if(checkBorders() || checkSnakeBody()){
+      gameOver()
+    }
+    else(
+      setEntities([...snake])
+    )
   },[snake])
 
   const updateGame = () => {
-    moveSnake()
+    if(pending){
+      moveSnake()
+    }
   }
 
-  return {updateSnakeDirection, snake, updateGame}
+  
+  return {updateSnakeDirection, entities, updateGame}
 }
 
 export default useGame;

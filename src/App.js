@@ -8,9 +8,9 @@ const App = () => {
 
   const {pressedKey, pressEvent} = useKeyPress()
 
-  const {updateSnakeDirection, snake, updateGame} = useGame(25)
+  const {updateSnakeDirection, entities, updateGame} = useGame(25)
 
-  const {switchPlayStop} = useGameEngine(250, updateGame)
+  const {switchPlayStop} = useGameEngine(125, updateGame)
 
   useEffect(() => {
     switch (pressedKey) {
@@ -36,7 +36,7 @@ const App = () => {
 
   return (
     <div>
-      <Display gameSize={25} entities={snake} />
+      <Display gameSize={25} entities={entities} />
     </div>
   )
 }
