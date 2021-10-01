@@ -5,14 +5,6 @@ const useGame = (gameSize) => {
   const [gameCount, setGameCount] = useState(0);
   const [food, setFood] = useState(null)
   const [snake, setSnake] = useState([
-    {x: 10, y: 0, type: 'snake-empty'},
-    {x: 9, y: 0, type: 'snake-empty'},
-    {x: 8, y: 0, type: 'snake-empty'},
-    {x: 7, y: 0, type: 'snake-empty'},
-    {x: 6, y: 0, type: 'snake-empty'},
-    {x: 5, y: 0, type: 'snake-empty'},
-    {x: 4, y: 0, type: 'snake-empty'},
-    {x: 3, y: 0, type: 'snake-empty'},
     {x: 2, y: 0, type: 'snake-empty'},
     {x: 1, y: 0, type: 'snake-empty'},
     {x: 0, y: 0, type: 'snake-empty'},
@@ -28,34 +20,38 @@ const useGame = (gameSize) => {
     if(newDirection === 'DOWN' && snake[0]['y'] >= snake[1]['y']) setSnakeDirection(newDirection);
     if(newDirection === 'UP' && snake[0]['y'] <= snake[1]['y']) setSnakeDirection(newDirection);
   }
-  //Moving snake in current direction
+  //Moving snake in current direction, growing snake
   const moveSnake = () => {
     const head = snake[0]
     let newHead
     const updateSnake = (newHead) => {
       const updatedSnake = [...snake];
       updatedSnake.unshift(newHead);
-      updatedSnake.pop();
+      let tail = updatedSnake.pop();
+      if(tail.type === 'snake-full'){
+        tail.type = 'snake-empty';
+        updatedSnake.push(tail);
+      }
       setSnake(updatedSnake)
     }
     switch (snakeDirection) {
       case 'RIGHT':
-        newHead = {...head}
+        newHead = {...head, type: 'snake-empty'}
         newHead.x++
         updateSnake(newHead)
         break;
       case 'LEFT':
-        newHead = {...head}
+        newHead = {...head, type: 'snake-empty'}
         newHead.x--
         updateSnake(newHead)
         break;
       case 'UP':
-        newHead = {...head}
+        newHead = {...head, type: 'snake-empty'}
         newHead.y--
         updateSnake(newHead)
         break;
       case 'DOWN':
-        newHead = {...head}
+        newHead = {...head, type: 'snake-empty'}
         newHead.y++
         updateSnake(newHead)
         break;     
@@ -143,8 +139,8 @@ const useGame = (gameSize) => {
       gameOver()
     } 
     else{
-      let {currentFood} = checkFood();
-      setEntities([...snake, currentFood]);
+      let {currentFood, currentSnake} = checkFood();
+      setEntities([...currentSnake, currentFood]);
     }
   },[gameCount])
 
