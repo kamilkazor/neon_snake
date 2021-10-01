@@ -13,7 +13,6 @@ const App = () => {
   const {switchPlayStop} = useGameEngine(500, moveSnake)
 
   useEffect(() => {
-    console.log(pressedKey)
     switch (pressedKey) {
       case 'ArrowRight':
         updateSnakeDirection('RIGHT')
@@ -27,6 +26,8 @@ const App = () => {
       case 'ArrowDown':
         updateSnakeDirection('DOWN')
         break;
+      case 'Space':
+        switchPlayStop()
       default:
         break;
     }
@@ -35,11 +36,6 @@ const App = () => {
   return (
     <div>
       <Display gameSize={25} entities={snake} />
-      <button onClick={switchPlayStop}>play</button>
-      <button onClick={() => {updateSnakeDirection('LEFT')}}>LEFT</button>
-      <button onClick={() => {updateSnakeDirection('RIGHT')}}>RIGHT</button>
-      <button onClick={() => {updateSnakeDirection('TOP')}}>TOP</button>
-      <button onClick={() => {updateSnakeDirection('BOTTOM')}}>BOTTOM</button>
     </div>
   )
 }

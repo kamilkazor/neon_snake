@@ -21,7 +21,6 @@ const useGame = () => {
     const head = snake[0]
     let newHead
     const updateSnake = (newHead) => {
-      console.log(newHead)
       const updatedSnake = [...snake];
       updatedSnake.unshift(newHead);
       updatedSnake.pop();
