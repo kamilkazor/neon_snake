@@ -10,7 +10,7 @@ const App = () => {
 
   const {updateSnakeDirection, snake, moveSnake} = useGame()
 
-  const {setRunning} = useGameEngine(500, moveSnake)
+  const {switchPlayStop} = useGameEngine(500, moveSnake)
 
   useEffect(() => {
     console.log(pressedKey)
@@ -35,8 +35,7 @@ const App = () => {
   return (
     <div>
       <Display gameSize={25} entities={snake} />
-      <button onClick={() => {setRunning(false)}}>pause</button>
-      <button onClick={() => {setRunning(true)}}>play</button>
+      <button onClick={switchPlayStop}>play</button>
       <button onClick={() => {updateSnakeDirection('LEFT')}}>LEFT</button>
       <button onClick={() => {updateSnakeDirection('RIGHT')}}>RIGHT</button>
       <button onClick={() => {updateSnakeDirection('TOP')}}>TOP</button>

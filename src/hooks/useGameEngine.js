@@ -4,6 +4,10 @@ const useGameEngine = (gameSpeed, gameUpdate) => {
   const [running, setRunning] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
 
+  const switchPlayStop = () => {
+    setRunning(!running)
+  }
+
   useEffect(() => {
     if(running){
       gameUpdate()
@@ -11,7 +15,7 @@ const useGameEngine = (gameSpeed, gameUpdate) => {
     }
   },[running, loopNum])
 
-  return {setRunning}
+  return {switchPlayStop}
 }
 
 export default useGameEngine;
