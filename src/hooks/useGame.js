@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 
 const useGame = (gameSize) => {
   const [pending, setPending] = useState(true);
+  const [food, setFood] = useState({})
   const [snake, setSnake] = useState([
     {x: 10, y: 0},
     {x: 9, y: 0},
@@ -19,7 +20,6 @@ const useGame = (gameSize) => {
   
 
   const [snakeDirection, setSnakeDirection] = useState('RIGHT');
-
   //Checking if new direction is allowed and assigning new value
   const updateSnakeDirection = (newDirection) => {
     if(newDirection === 'RIGHT' && snake[0]['x'] >= snake[1]['x']) setSnakeDirection(newDirection);
@@ -27,7 +27,6 @@ const useGame = (gameSize) => {
     if(newDirection === 'DOWN' && snake[0]['y'] >= snake[1]['y']) setSnakeDirection(newDirection);
     if(newDirection === 'UP' && snake[0]['y'] <= snake[1]['y']) setSnakeDirection(newDirection);
   }
-
   //Moving snake in current direction
   const moveSnake = () => {
     const head = snake[0]
@@ -69,7 +68,6 @@ const useGame = (gameSize) => {
   const gameOver = () => {
     setPending(false)
   }
-
   //Returns true if border was crossed
   const checkBorders = () => {
     let borderCrossed = false;
@@ -96,15 +94,38 @@ const useGame = (gameSize) => {
     return biteItself;
   }
 
+  //Creates food in random empty field
+  const addFood = () => {
+    let emptyFields = [];
+    let snakeFields = [];
+    snake.forEach((segment) => {
+      snakeFields.push(`${segment.x}:${segment.y}`);
+    })
+    for(let x = 0; x < gameSize; x++){
+      for (let y = 0; y < gameSize; y++){
+        let field = `${x}:${y}`
+        if(!snakeFields.includes(field)){
+          emptyFields.push(field)
+        } 
+      }
+    }
+    let randomField = emptyFields[Math.floor(Math.random()*emptyFields.length)];
+    randomField = randomField.split(':');
+    let newFood = {x: randomField[0], y: randomField[1]};
+    setFood(newFood);
+    return newFood;
+  }
+
 
   useEffect(() => {
     //Checking lose conditions
     if(checkBorders() || checkSnakeBody()){
       gameOver()
+    } 
+    else{
+      let newFood = addFood()
+      setEntities([...snake, newFood]);
     }
-    else(
-      setEntities([...snake])
-    )
   },[snake])
 
   const updateGame = () => {
