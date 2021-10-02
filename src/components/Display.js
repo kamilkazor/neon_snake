@@ -14,8 +14,10 @@ const Display = ({gameSize, entities}) => {
   }
   
   return (
-    <div className="display" style={displayStyle}>
-      {drawFields(entities)}
+    <div className="displayFrame">
+      <div className="display" style={displayStyle}>
+        {drawFields(entities)}
+      </div>
     </div>
   )
 }
