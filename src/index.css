@@ -12,7 +12,13 @@ body {
   display: flex;
   color: red;
   justify-content: space-between;
-  height: 50px;
+  height: 60px;
+  margin: 20px 0px 20px 0px;
+}
+.messageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .display {
   position: relative;

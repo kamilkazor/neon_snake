@@ -15,7 +15,7 @@ const useGameEngine = (gameSpeed, gameUpdate) => {
     }
   },[running, loopNum])
 
-  return {switchPlayStop}
+  return {switchPlayStop, running}
 }
 
 export default useGameEngine;

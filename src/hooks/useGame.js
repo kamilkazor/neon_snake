@@ -12,7 +12,7 @@ const useGame = (gameSize) => {
   const snakeDirection = useRef('RIGHT');
   const food = useRef(null);
   const [entities, setEntities] = useState([...snake.current])
-  const [gameStatus, setGameStatus] = useState({status: 'pending', snakeLength: snake.current.length})
+  const [gameStatus, setGameStatus] = useState({gameOver: false, snakeLength: snake.current.length})
   
   //Stops the game
   const gameOver = () => {
@@ -25,7 +25,7 @@ const useGame = (gameSize) => {
     snakeDirection.current = 'RIGHT';
     pending.current = true;
     setEntities([...snake.current])
-    setGameStatus({status: 'pending', snakeLength: snake.current.length})
+    setGameStatus({gameOver: false, snakeLength: snake.current.length})
   }
 
   
@@ -139,7 +139,7 @@ const useGame = (gameSize) => {
     //Checking lose conditions
     if(checkBorders() || checkSnakeBody()){
       gameOver()
-      setGameStatus({...gameStatus, status: 'GAME-OVER'})
+      setGameStatus({...gameStatus, gameOver: true})
     } 
     else{
       checkFood();

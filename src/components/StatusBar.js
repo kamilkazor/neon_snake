@@ -1,8 +1,11 @@
 const StatusBar = ({message, snakeLength}) => {
   return (
     <div className="statusBar">
-      <div>{message}</div>
-      <div>Snake length: {snakeLength}</div>
+      <div className="messageBox">
+        <div>{message.top}</div>
+        <div>{message.bottom}</div>
+      </div>
+      <div>SNAKE LENGTH: {snakeLength}</div>
     </div>
   )
 }
