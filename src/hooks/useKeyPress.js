@@ -3,12 +3,12 @@ import { useEffect, useState, useRef } from "react";
 const useKeyPress = () => {
   const [pressedKey, setPressedKey] = useState('');
   const [pressEvent, setPressEvent] = useState(null);
-  const keyUp = useRef(true);
+  const pressedKeys = useRef([])
 
   const handleKeyDown = (event) => {
     event.preventDefault();
-    if(keyUp.current){
-      keyUp.current = false
+    if(!pressedKeys.current.includes(event.code)){
+      pressedKeys.current.push(event.code);
       setPressedKey(event.code);
       setPressEvent(event);
     }
@@ -16,7 +16,10 @@ const useKeyPress = () => {
 
   const handleKeyUp = (event) => {
     event.preventDefault();
-    keyUp.current = true
+    const index = pressedKeys.current.indexOf(event.code);
+    if (index > -1) {
+      pressedKeys.current.splice(index, 1);
+    }
   };
 
   useEffect(() => {
