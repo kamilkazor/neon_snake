@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import Display from "./components/Display";
 import StatusBar from "./components/StatusBar";
+import Header from "./components/Header";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
+import InfoBox from "./components/InfoBox";
 
 const App = () => {
   const gameSize = 25;
   const gameSpeed = 125;
 
-  const {pressedKey, pressEvent} = useKeyPress()
+  const pressEvent = useKeyPress()
   const {updateSnakeDirection, entities, updateGame, gameRestart, gameStatus} = useGame(gameSize)
   const {switchPlayStop, running} = useGameEngine(gameSpeed, updateGame)
+
 
   const [message, setMessage] = useState({top: '', bottom: ''})
   useEffect(() => {
@@ -32,9 +35,8 @@ const App = () => {
       gameRestart();
     }
   }
-
   useEffect(() => {
-    switch (pressedKey) {
+    switch (pressEvent.code) {
       case 'ArrowRight':
         updateSnakeDirection('RIGHT')
         break;
@@ -60,8 +62,10 @@ const App = () => {
 
   return (
     <div className="app">
+      <Header/>
       <StatusBar message={message} snakeLength={gameStatus.snakeLength} />
       <Display gameSize={gameSize} entities={entities} />
+      <InfoBox/>
     </div>
   )
 }

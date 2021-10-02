@@ -11,10 +11,12 @@ const Field = ({entity, size}) => {
 
 
 
-  let classes = `field ${entity.type}`
+  let classes = `fieldContent ${entity.type}`
   
   return(
-    <div className={classes} style={fieldStyle}></div>
+    <div className="field" style={fieldStyle}>
+      <div className={classes}></div>
+    </div>
   )
 }
 

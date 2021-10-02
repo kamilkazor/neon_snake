@@ -1,22 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 
 const useKeyPress = () => {
-  const [pressedKey, setPressedKey] = useState('');
-  const [pressEvent, setPressEvent] = useState(null);
-  const keyUp = useRef(true);
+  const [pressEvent, setPressEvent] = useState({code:''});
+  const pressedKeys = useRef([])
 
   const handleKeyDown = (event) => {
     event.preventDefault();
-    if(keyUp.current){
-      keyUp.current = false
-      setPressedKey(event.code);
+    if(!pressedKeys.current.includes(event.code)){
+      pressedKeys.current.push(event.code);
       setPressEvent(event);
     }
   };
 
   const handleKeyUp = (event) => {
     event.preventDefault();
-    keyUp.current = true
+    const index = pressedKeys.current.indexOf(event.code);
+    if (index > -1) {
+      pressedKeys.current.splice(index, 1);
+    }
   };
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const useKeyPress = () => {
     };
   }, [pressEvent]);
 
-  return {pressedKey, pressEvent}
+  return pressEvent
 }
 
 export default useKeyPress;
