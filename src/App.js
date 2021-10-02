@@ -11,9 +11,10 @@ const App = () => {
   const gameSize = 25;
   const gameSpeed = 125;
 
-  const {pressedKey, pressEvent} = useKeyPress()
+  const pressEvent = useKeyPress()
   const {updateSnakeDirection, entities, updateGame, gameRestart, gameStatus} = useGame(gameSize)
   const {switchPlayStop, running} = useGameEngine(gameSpeed, updateGame)
+
 
   const [message, setMessage] = useState({top: '', bottom: ''})
   useEffect(() => {
@@ -34,9 +35,8 @@ const App = () => {
       gameRestart();
     }
   }
-
   useEffect(() => {
-    switch (pressedKey) {
+    switch (pressEvent.code) {
       case 'ArrowRight':
         updateSnakeDirection('RIGHT')
         break;
