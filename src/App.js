@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
+import InfoBox from "./components/InfoBox";
 
 const App = () => {
   const gameSize = 25;
@@ -64,6 +65,7 @@ const App = () => {
       <Header/>
       <StatusBar message={message} snakeLength={gameStatus.snakeLength} />
       <Display gameSize={gameSize} entities={entities} />
+      <InfoBox/>
     </div>
   )
 }
