@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Display from "./components/Display";
+import StatusBar from "./components/StatusBar";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
@@ -9,10 +10,28 @@ const App = () => {
   const gameSpeed = 125;
 
   const {pressedKey, pressEvent} = useKeyPress()
+  const {updateSnakeDirection, entities, updateGame, gameRestart, gameStatus} = useGame(gameSize)
+  const {switchPlayStop, running} = useGameEngine(gameSpeed, updateGame)
 
-  const {updateSnakeDirection, entities, updateGame} = useGame(gameSize)
+  const [message, setMessage] = useState({top: '', bottom: ''})
+  useEffect(() => {
+    if(gameStatus.gameOver){
+      setMessage({top: 'GAME-OVER', bottom: 'press enter to restart' })
+    }
+    else if(!running){
+      setMessage({top: 'PAUSED', bottom: 'press space to play' })
+    }
+    else{
+      setMessage({top: '', bottom: ''})
+    }
+  },[running, gameStatus])
 
-  const {switchPlayStop} = useGameEngine(gameSpeed, updateGame)
+  
+  const enterPressHandler = () => {
+    if(gameStatus.gameOver){
+      gameRestart();
+    }
+  }
 
   useEffect(() => {
     switch (pressedKey) {
@@ -31,13 +50,17 @@ const App = () => {
       case 'Space':
         switchPlayStop()
         break;
+      case 'Enter':
+        enterPressHandler()
+        break;
       default:
         break;
     }
   },[pressEvent])
 
   return (
-    <div>
+    <div className="app">
+      <StatusBar message={message} snakeLength={gameStatus.snakeLength} />
       <Display gameSize={gameSize} entities={entities} />
     </div>
   )
