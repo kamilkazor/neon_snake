@@ -1,7 +1,13 @@
 {
   "name": "neon_snake",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "repository": "https://github.com/kamilkazor/neon_snake.git",
+  "author": {
+    "name": "Kamil Kazor",
+    "email": "79405091+kamilkazor@users.noreply.github.com",
+    "url": "https://github.com/kamilkazor"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
