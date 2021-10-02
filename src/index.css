@@ -13,6 +13,10 @@ body {
   color: hsl(0, 100%, 75%);
   text-shadow: 0 0 3.0em hsl(0, 100%, 30%), 0 0 1.5em hsl(0, 100%, 50%), 0 0 0.1em hsl(0, 100%, 75%);
 }
+.biggerText {
+  font-size: 30px;
+  line-height: 30px;
+}
 .app {
   display: flex;
   flex-direction: column;
