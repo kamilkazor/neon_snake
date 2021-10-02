@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Display from "./components/Display";
 import StatusBar from "./components/StatusBar";
+import Header from "./components/Header";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
@@ -60,6 +61,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <Header/>
       <StatusBar message={message} snakeLength={gameStatus.snakeLength} />
       <Display gameSize={gameSize} entities={entities} />
     </div>
