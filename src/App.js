@@ -1,25 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Display from "./components/Display";
+import StatusBar from "./components/StatusBar";
+import Header from "./components/Header";
+import useGameEngine from "./hooks/useGameEngine";
+import useKeyPress from "./hooks/useKeyPress";
+import useGame from "./hooks/useGame";
+import InfoBox from "./components/InfoBox";
 
-function App() {
+const App = () => {
+  const gameSize = 25;
+  const gameSpeed = 125;
+
+  const pressEvent = useKeyPress()
+  const {updateSnakeDirection, entities, updateGame, gameRestart, gameStatus} = useGame(gameSize)
+  const {switchPlayStop, running} = useGameEngine(gameSpeed, updateGame)
+
+
+  const [message, setMessage] = useState({top: '', bottom: ''})
+  useEffect(() => {
+    if(gameStatus.gameOver){
+      setMessage({top: 'GAME-OVER', bottom: 'press enter to restart' })
+    }
+    else if(!running){
+      setMessage({top: 'PAUSED', bottom: 'press space to play' })
+    }
+    else{
+      setMessage({top: '', bottom: ''})
+    }
+  },[running, gameStatus])
+
+  
+  const enterPressHandler = () => {
+    if(gameStatus.gameOver){
+      gameRestart();
+    }
+  }
+  useEffect(() => {
+    switch (pressEvent.code) {
+      case 'ArrowRight':
+        updateSnakeDirection('RIGHT')
+        break;
+      case 'ArrowLeft':
+        updateSnakeDirection('LEFT')
+        break;
+      case 'ArrowUp':
+        updateSnakeDirection('UP')
+        break;
+      case 'ArrowDown':
+        updateSnakeDirection('DOWN')
+        break;
+      case 'Space':
+        switchPlayStop()
+        break;
+      case 'Enter':
+        enterPressHandler()
+        break;
+      default:
+        break;
+    }
+  },[pressEvent])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header/>
+      <StatusBar message={message} snakeLength={gameStatus.snakeLength} />
+      <Display gameSize={gameSize} entities={entities} />
+      <InfoBox/>
     </div>
-  );
+  )
 }
 
 export default App;

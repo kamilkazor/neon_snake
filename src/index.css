@@ -1,13 +1,82 @@
+@font-face {
+  font-family: "Quicksand-Regular";
+  src: local("Quicksand-Regular"), url("./fonts/Quicksand/static/Quicksand-Regular.ttf") format("truetype");
+  }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  background-color: black;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.neonText {
+  font-family: "Quicksand-Regular";
+  color: hsl(0, 100%, 75%);
+  text-shadow: 0 0 3.0em hsl(0, 100%, 30%), 0 0 1.5em hsl(0, 100%, 50%), 0 0 0.1em hsl(0, 100%, 75%);
+}
+.biggerText {
+  font-size: 30px;
+  line-height: 30px;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  height: 100px;
+  margin: 20px 0px 0px 0px;
+  border: 4px solid hsl(240, 100%, 75%);
+  box-shadow: 0 0 32px hsl(240, 100%, 30%), 0 0 16px hsl(240, 100%, 50%), 0 0 2px hsl(240, 100%, 75%),
+              inset 0 0 32px hsl(240, 100%, 30%), inset 0 0 16px hsl(240, 100%, 50%), inset 0 0 2px hsl(240, 100%, 75%);
+  border-radius: 8px;
+}
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  margin: 20px 0px 20px 0px;
+}
+.messageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.infoBox {
+  margin: 20px 0px 20px 0px;
+}
+.display {
+  position: relative;
+}
+.displayFrame {
+  padding: 5px;
+  border: 4px solid yellow;
+  border: 4px solid hsl(60, 50%, 75%);
+  box-shadow: 0 0 16px hsl(60, 50%, 30%), 0 0 8px hsl(60, 50%, 50%), 0 0 1px hsl(60, 50%, 75%),
+              inset 0 0 16px hsl(60, 50%, 30%), inset 0 0 8px hsl(60, 50%, 50%), inset 0 0 1px hsl(60, 50%, 75%);
+  border-radius: 8px;
+}
+.field {
+  position: absolute;
+  box-sizing: border-box;
+}
+.fieldContent {
+  height: 80%;
+  width: 80%;
+  margin: 10%;
+  border-radius: 10%;
+}
+.food {
+  background-color: hsl(0, 100%, 75%);
+  box-shadow: 0 0 3.0em hsl(0, 100%, 30%), 0 0 1.5em hsl(0, 100%, 50%), 0 0 0.1em hsl(0, 100%, 75%);
+}
+.snakeEmpty {
+  background-color: hsl(240, 100%, 75%);
+  box-shadow: 0 0 3.0em hsl(240, 100%, 30%), 0 0 1.5em hsl(240, 100%, 50%), 0 0 0.1em hsl(240, 100%, 75%);
+}
+.snakeFull {
+  background-color: hsl(330, 100%, 75%);
+  box-shadow: 0 0 3.0em hsl(330, 100%, 30%), 0 0 1.5em hsl(330, 100%, 50%), 0 0 0.1em hsl(330, 100%, 75%);
 }
