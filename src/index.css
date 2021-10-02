@@ -4,9 +4,18 @@ body {
   justify-content: center;
   background-color: black;
 }
+.app {
+  display: flex;
+  flex-direction: column;
+}
+.statusBar {
+  display: flex;
+  color: red;
+  justify-content: space-between;
+  height: 50px;
+}
 .display {
   position: relative;
-  margin-top: 30px;
   border: 4px solid yellow;
   background-color: black;
 }

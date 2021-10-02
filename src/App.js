@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Display from "./components/Display";
+import StatusBar from "./components/StatusBar";
 import useGameEngine from "./hooks/useGameEngine";
 import useKeyPress from "./hooks/useKeyPress";
 import useGame from "./hooks/useGame";
@@ -37,9 +38,8 @@ const App = () => {
   },[pressEvent])
 
   return (
-    <div>
-      <div style={{color:'white'}}>{gameStatus.snakeLength}</div>
-      <div style={{color:'white'}}>{gameStatus.status}</div>
+    <div className="app">
+      <StatusBar message={gameStatus.status} snakeLength={gameStatus.snakeLength} />
       <Display gameSize={gameSize} entities={entities} />
       <button onClick={gameRestart} >restart</button>
     </div>
