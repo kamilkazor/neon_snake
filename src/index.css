@@ -1,8 +1,13 @@
+@font-face {
+  font-family: "Quicksand-Regular";
+  src: local("Quicksand-Regular"), url("./fonts/Quicksand/static/Quicksand-Regular.ttf") format("truetype");
+  }
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   background-color: black;
+  font-family: "Quicksand-Regular";
 }
 .app {
   display: flex;
