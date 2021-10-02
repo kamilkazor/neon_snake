@@ -10,7 +10,7 @@ const App = () => {
 
   const {pressedKey, pressEvent} = useKeyPress()
 
-  const {updateSnakeDirection, entities, updateGame} = useGame(gameSize)
+  const {updateSnakeDirection, entities, updateGame, gameRestart} = useGame(gameSize)
 
   const {switchPlayStop} = useGameEngine(gameSpeed, updateGame)
 
@@ -39,6 +39,7 @@ const App = () => {
   return (
     <div>
       <Display gameSize={gameSize} entities={entities} />
+      <button onClick={gameRestart} >restart</button>
     </div>
   )
 }
