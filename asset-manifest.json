@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/neon_snake/static/css/main.ce275182.chunk.css",
+    "main.css": "/neon_snake/static/css/main.53665fb2.chunk.css",
     "main.js": "/neon_snake/static/js/main.c47b661a.chunk.js",
     "main.js.map": "/neon_snake/static/js/main.c47b661a.chunk.js.map",
     "runtime-main.js": "/neon_snake/static/js/runtime-main.1f33cd3f.js",
@@ -8,14 +8,14 @@
     "static/js/2.b45d7d44.chunk.js": "/neon_snake/static/js/2.b45d7d44.chunk.js",
     "static/js/2.b45d7d44.chunk.js.map": "/neon_snake/static/js/2.b45d7d44.chunk.js.map",
     "index.html": "/neon_snake/index.html",
-    "static/css/main.ce275182.chunk.css.map": "/neon_snake/static/css/main.ce275182.chunk.css.map",
+    "static/css/main.53665fb2.chunk.css.map": "/neon_snake/static/css/main.53665fb2.chunk.css.map",
     "static/js/2.b45d7d44.chunk.js.LICENSE.txt": "/neon_snake/static/js/2.b45d7d44.chunk.js.LICENSE.txt",
     "static/media/index.css": "/neon_snake/static/media/Quicksand-Regular.109d09e5.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.1f33cd3f.js",
     "static/js/2.b45d7d44.chunk.js",
-    "static/css/main.ce275182.chunk.css",
+    "static/css/main.53665fb2.chunk.css",
     "static/js/main.c47b661a.chunk.js"
   ]
 }
